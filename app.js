@@ -10,11 +10,15 @@ const usersRouter = require("./routers/usersRouter");
 const routeNotFound = require("./middlewares/routeNotFound");
 const errorsHandler = require("./middlewares/errorsHandler");
 
+const cors = require("cors");
+
 const app = express();
 
 let port = +process.env.PORT || 3001;
 
 dotenv.config();
+
+app.use(cors());
 
 app.use(express.json());
 

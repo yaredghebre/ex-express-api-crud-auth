@@ -2,8 +2,9 @@ const prisma = require("../library/PrismaClient");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const { matchedData } = require("express-validator");
-const { json } = require("express");
+const usersAuthError = require("../exceptions/usersAuthError");
 
+/////////// R E G I S T E R /////////////
 async function register(req, res) {
   const sanitizedData = matchedData(req);
 
@@ -28,10 +29,31 @@ async function register(req, res) {
   res.json({ user, token });
 }
 
-/////////////////////////
+/////////// L O G I N /////////////
+async function login(req, res, next) {
+  const { email, password } = req.body;
 
-async function login(req, res) {
-  res.send("login");
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    return next(new usersAuthError("User not found!"));
+  }
+
+  const comparePassword = await bcrypt.compare(password, user.password);
+
+  if (!comparePassword) {
+    return next(new usersAuthError("Wrong Password!"));
+  }
+
+  const token = jsonwebtoken.sign(user, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+
+  // cancello la password dall'oggetto user!!!
+  delete user.password;
+  res.json({ login, token });
 }
 
 module.exports = {
