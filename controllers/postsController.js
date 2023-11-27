@@ -64,10 +64,10 @@ async function store(req, res, next) {
         startsWith: slug,
       },
     },
-    include: {
-      category: true,
-      tag: true,
-    },
+    // include: {
+    //   category: true,
+    //   tag: true,
+    // },
   });
 
   const nextSlugCount = existingPosts.length;
@@ -89,14 +89,8 @@ async function store(req, res, next) {
       },
     },
     // include: {
-    //   categoryId: {
-    //     id: true,
-    //   },
-    //   tags: {
-    //     id: true,
-    //     name: true,
-    //     slug: true,
-    //   },
+    //   tags: true,
+    //   category: true,
     // },
   });
 
