@@ -9,7 +9,7 @@ async function index(req, res, next) {
   const queryFilter = {};
   // Pagination
   const page = req.query.page || 1;
-  const perPage = 5;
+  const perPage = 15;
 
   if (filters && filters.title) {
     queryFilter.title = {

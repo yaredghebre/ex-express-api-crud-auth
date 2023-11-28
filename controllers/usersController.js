@@ -4,6 +4,19 @@ const jsonwebtoken = require("jsonwebtoken");
 const { matchedData } = require("express-validator");
 const usersAuthError = require("../exceptions/usersAuthError");
 
+async function index(req, res) {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      role: true,
+    },
+  });
+
+  res.json({ users });
+}
+
 /////////// R E G I S T E R /////////////
 async function register(req, res) {
   const sanitizedData = matchedData(req);
@@ -57,6 +70,7 @@ async function login(req, res, next) {
 }
 
 module.exports = {
+  index,
   register,
   login,
 };

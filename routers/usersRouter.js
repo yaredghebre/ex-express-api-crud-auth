@@ -8,6 +8,8 @@ const { checkSchema } = require("express-validator");
 const userRegister = require("../validations/userRegister");
 const userLogin = require("../validations/userLogin");
 
+router.get("/users", usersController.index);
+
 router.post(
   "/register",
   checkSchema(userRegister),
