@@ -64,10 +64,6 @@ async function store(req, res, next) {
         startsWith: slug,
       },
     },
-    // include: {
-    //   category: true,
-    //   tag: true,
-    // },
   });
 
   const nextSlugCount = existingPosts.length;
@@ -87,11 +83,8 @@ async function store(req, res, next) {
       tags: {
         connect: addData.tags.map((tagId) => ({ id: tagId })),
       },
+      userId: addData.userId,
     },
-    // include: {
-    //   tags: true,
-    //   category: true,
-    // },
   });
 
   return res.json(newPost);
@@ -120,6 +113,7 @@ async function update(req, res) {
         title: postData.title,
         image: postData.image,
         content: postData.content,
+        categoryId: postData.categoryId,
       },
     });
     return res.json(updatedPost);
