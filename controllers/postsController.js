@@ -79,11 +79,11 @@ async function store(req, res, next) {
       image: addData.image,
       content: addData.content,
       published: addData.published,
-      categoryId: addData.categoryId,
+      categoryId: +addData.categoryId,
       tags: {
-        connect: addData.tags.map((tagId) => ({ id: tagId })),
+        connect: addData.tags.map((tagId) => ({ id: +tagId })),
       },
-      userId: addData.userId,
+      userId: +addData.userId,
     },
   });
 
