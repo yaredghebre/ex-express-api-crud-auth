@@ -23,6 +23,10 @@ async function index(req, res, next) {
     skip: (page - 1) * perPage,
     take: perPage,
     where: queryFilter,
+    include: {
+      tags: true,
+      category: true,
+    },
   });
 
   if (data.length === 0) {
@@ -37,6 +41,10 @@ async function show(req, res, next) {
   const data = await prisma.post.findUnique({
     where: {
       slug: slug,
+    },
+    include: {
+      tags: true,
+      category: true,
     },
   });
 
@@ -84,6 +92,9 @@ async function store(req, res, next) {
         connect: addData.tags.map((tagId) => ({ id: +tagId })),
       },
       userId: +addData.userId,
+    },
+    include: {
+      tags: true,
     },
   });
 

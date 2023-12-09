@@ -33,7 +33,6 @@ model Category {
   slug      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  // Post associati alla category
   posts     Post[]
 }
 

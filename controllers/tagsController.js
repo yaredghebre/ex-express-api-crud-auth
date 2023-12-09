@@ -4,6 +4,11 @@ const validation = require("../exceptions/ValidationError");
 
 const { validationResult } = require("express-validator");
 
+async function getAllTags() {
+  const tags = await prisma.tag.findMany();
+  return tags;
+}
+
 async function store(req, res, next) {
   const validation = validationResult(req);
   const addData = req.body;
@@ -51,4 +56,5 @@ async function store(req, res, next) {
 
 module.exports = {
   store,
+  getAllTags,
 };
